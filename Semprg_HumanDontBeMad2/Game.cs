@@ -6,7 +6,7 @@ namespace Semprg_HumanDontBeMad2;
 public record Game
 {
     private List<Player> activePlayers = new();
-    private List<Player> finishedPlayers = new();
+    //private List<Player> finishedPlayers = new();
     private Rules rules;
     private Board board;
     private IDice dice;
@@ -14,6 +14,9 @@ public record Game
     {
         this.rules = rules;
         this.board = board;
+        startTile = board.TileSet.First(x => x.IsStart);
+        if (startTile is null)
+            throw new ArgumentNullException($"{nameof(startTile)}", "The given board contains no start til");
         this.dice = dice;
         for (int i = 0; i < playerNames.Length; i++)
         {
@@ -35,20 +38,17 @@ public record Game
         Console.WriteLine("gg");
     }
 
-    private List<Figure> figures = new();
+    //private readonly List<Figure> figures = new();
     private Tile startTile;
     private void Start()
     {
-        startTile = board.TileSet.First(x => x.IsStart);
-        if (startTile is null)
-            throw new ArgumentNullException($"{nameof(startTile)}", "The given board contains no start til");
         //Fill figures
         foreach (var player in activePlayers)
         {
             for (int i = 0; i < rules.FigureAmount; i++)
             {
                 var newFigure = new Figure(i,player);
-                figures.Add(newFigure);
+                //figures.Add(newFigure);
                 player.HeldFigures.Add(newFigure);
 
                 //Put them on start
@@ -125,7 +125,7 @@ public record Game
         foreach (var playerToMark in playersToMark)
         {
             activePlayers.Remove(playerToMark);
-            finishedPlayers.Add(playerToMark);
+            //finishedPlayers.Add(playerToMark);
         }
     }
 
