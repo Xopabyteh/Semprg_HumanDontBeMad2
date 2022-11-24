@@ -65,7 +65,7 @@ public record Game
         {
             //Move using a random figure in the players hand
             var figureToMoveIndex = Random.Shared.Next(player.HeldFigures.Count);
-            var figureToMove = player.HeldFigures.First(x => x.Id == figureToMoveIndex);
+            var figureToMove = player.HeldFigures.ElementAt(figureToMoveIndex);
 
             var rng = dice.Roll();
             var figuresCurrentTileNode = board.TileSet.Find(board.TileSet.First(x => x.Figures.Contains(figureToMove)));
